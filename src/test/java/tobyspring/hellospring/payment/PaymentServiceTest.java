@@ -27,7 +27,7 @@ class PaymentServiceTest {
 
         Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
 
-        assertThat(payment.getExRate()).isEqualTo(exRate);
-        assertThat(payment.getConvertedAmount()).isEqualTo(convertedAmount);
+        assertThat(payment.getExRate()).isEqualByComparingTo(exRate);
+        assertThat(payment.getConvertedAmount()).isEqualByComparingTo(convertedAmount);
     }
 }
