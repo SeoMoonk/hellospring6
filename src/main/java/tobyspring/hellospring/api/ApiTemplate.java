@@ -17,8 +17,16 @@ public class ApiTemplate {
     }
 
     //Default Callback (url만 전달하고, 템플릿이 가지고 있는 기본적인 콜백을 사용함)
-    public BigDecimal getExRate(String url) {
+    public BigDecimal getForExRate(String url) {
         return this.getForExRate(url, this.apiExecutor, this.exRateExtractor);
+    }
+
+    public BigDecimal getForExRate(String url, ApiExecutor apiExecutor) {
+        return this.getForExRate(url, apiExecutor, this.exRateExtractor);
+    }
+
+    public BigDecimal getForExRate(String url, ExRateExtractor exRateExtractor) {
+        return this.getForExRate(url, this.apiExecutor, exRateExtractor);
     }
 
     public BigDecimal getForExRate(String url, ApiExecutor apiExecutor, ExRateExtractor exRateExtractor) {
