@@ -23,6 +23,16 @@ public class Payment {
         this.validUntil = validUntil;
     }
 
+    //**static 달아줘야 함**
+    public static Payment createPrepared(Long orderId, String currency, BigDecimal foreignCurrencyAmount,
+                                         BigDecimal exRate, LocalDateTime now) {
+        BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exRate);
+        LocalDateTime validUntil = now.plusMinutes(30);
+
+        return new Payment(orderId, currency, foreignCurrencyAmount, exRate, convertedAmount, validUntil);
+
+    }
+
     public Long getOrderId() {
         return orderId;
     }

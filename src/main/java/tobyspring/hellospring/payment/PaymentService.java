@@ -18,9 +18,10 @@ public class PaymentService {
 
     public Payment prepare(Long orderId, String currency, BigDecimal foreignCurrencyAmount) throws IOException {
         BigDecimal exRate = exRateProvider.getExRate(currency);
-        BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exRate);
-        LocalDateTime validUntil = LocalDateTime.now(clock).plusMinutes(30);
+        //리팩토링 되면서, 준비는 기본적인 준비는 Payment에서 처리하고 환율을 가져오는 부분만 Service에서 처리하게 되었음.
 
-        return new Payment(orderId, currency, foreignCurrencyAmount, exRate, convertedAmount, validUntil);
+        return Payment.createPrepared(orderId, currency, foreignCurrencyAmount, exRate, LocalDateTime.now(clock));
     }
+
+
 }
