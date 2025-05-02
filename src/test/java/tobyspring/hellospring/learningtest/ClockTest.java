@@ -29,9 +29,9 @@ public class ClockTest {
         LocalDateTime dt1 = LocalDateTime.now(clock);
         LocalDateTime dt2 = LocalDateTime.now(clock);
 
-        System.out.println(dt1);
-        System.out.println(dt2);
+        LocalDateTime dt3 = LocalDateTime.now(clock).plusHours(1);
 
         Assertions.assertThat(dt2).isEqualTo(dt1);
+        Assertions.assertThat(dt3).isEqualTo(dt1.plusHours(1));
     }
 }
