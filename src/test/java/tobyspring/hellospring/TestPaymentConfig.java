@@ -7,7 +7,6 @@ import java.time.Instant;
 import java.time.ZoneId;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tobyspring.hellospring.payment.ExRateProvider;
 import tobyspring.hellospring.payment.ExRateProviderStub;
 import tobyspring.hellospring.payment.PaymentService;
 
@@ -20,7 +19,7 @@ public class TestPaymentConfig {
     }
 
     @Bean
-    public ExRateProvider exRateProvider() {
+    public ExRateProviderStub exRateProvider() {
         return new ExRateProviderStub(valueOf(1_000));
     }
 

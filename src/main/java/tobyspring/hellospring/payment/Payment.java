@@ -1,8 +1,13 @@
 package tobyspring.hellospring.payment;
 
 import java.math.BigDecimal;
+import java.time.Clock;
 import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.ToString;
 
+@Getter
+@ToString
 public class Payment {
     private Long orderId;                       //주문 번호
     private String currency;                    //통화 종류
@@ -30,42 +35,9 @@ public class Payment {
         LocalDateTime validUntil = now.plusMinutes(30);
 
         return new Payment(orderId, currency, foreignCurrencyAmount, exRate, convertedAmount, validUntil);
-
     }
 
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public BigDecimal getForeignCurrencyAmount() {
-        return foreignCurrencyAmount;
-    }
-
-    public BigDecimal getExRate() {
-        return exRate;
-    }
-
-    public BigDecimal getConvertedAmount() {
-        return convertedAmount;
-    }
-
-    public LocalDateTime getValidUntil() {
-        return validUntil;
-    }
-
-    @Override
-    public String toString() {
-        return "Payment{" +
-                "orderId=" + orderId +
-                ", currency='" + currency + '\'' +
-                ", foreignCurrencyAmount=" + foreignCurrencyAmount +
-                ", exRate=" + exRate +
-                ", convertedAmount=" + convertedAmount +
-                ", validUntil=" + validUntil +
-                '}';
+    public boolean isValid(Clock clock) {
+        return LocalDateTime.now(clock).isBefore(this.validUntil);
     }
 }
