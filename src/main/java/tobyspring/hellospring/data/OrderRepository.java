@@ -2,6 +2,7 @@ package tobyspring.hellospring.data;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
 import tobyspring.hellospring.order.Order;
 
 public class OrderRepository {
@@ -14,11 +15,22 @@ public class OrderRepository {
 
     public void save(Order order) {
         EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
 
-        em.persist(order);
+        try {
+            em.persist(order);
 
-        em.getTransaction().commit();
-        em.close();
+            transaction.commit();
+        } catch (RuntimeException e) {
+            if (transaction.isActive()) {
+                transaction.rollback();     //롤백
+            }
+            throw e;
+        } finally {
+            if (em.isOpen()) {
+                em.close();
+            }
+        }
     }
 }
